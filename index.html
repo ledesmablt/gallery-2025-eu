@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Europe 2025</title>
+</head>
+
+<script type="text/javascript" src="./imagelist.js"></script>
+<script type="text/javascript">
+  const MAX_WIDTH = 800
+  let index = 0
+
+  const setImg = () => {
+    const filename = imageList[index]
+    document.getElementById('displaying-img').setAttribute('src', `images/${filename}`)
+  }
+
+  const onImgLoad = function () {
+    const size = Math.min(window.innerWidth, MAX_WIDTH)
+    if (this.naturalHeight > this.naturalWidth) {
+      this.setAttribute('height', `${size}px`)
+      this.removeAttribute('width')
+    } else {
+      this.setAttribute('width', `${size}px`)
+      this.removeAttribute('height')
+    }
+  }
+
+  const nextImg = () => {
+    index += 1
+    if (index >= imageList.length) {
+      index = 0
+    }
+    setImg()
+  }
+  const prevImg = () => {
+    index -= 1
+    if (index < 0) {
+      index = imageList.length - 1
+    }
+    setImg()
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('displaying-img').addEventListener('load', onImgLoad)
+    setImg()
+  })
+</script>
+
+<style>
+  body {
+    font-size: 16px;
+    font-family: sans-serif;
+  }
+
+  #wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  h1 {
+    font-size: 20px;
+    margin-bottom: 0;
+  }
+
+  .btn-wrapper {
+    margin-bottom: 4px;
+    display: flex;
+    gap: 8px;
+    margin: 4px 0 16px 0;
+  }
+
+  .btn-wrapper button {
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  #site-url {
+    margin-top: 16px;
+  }
+</style>
+
+<body>
+  <div id="wrapper">
+    <h1>earth from switzerland (2025)</h1>
+    <div class="btn-wrapper">
+      <button onclick="prevImg()"><i>prev</i></button>
+      <button onclick="nextImg()"><i>next</i></button>
+    </div>
+    <div id="img-wrapper">
+      <img id="displaying-img" src="" alt="" object-fit="contain">
+    </div>
+    <a id="site-url" href="https://ledesmablt.com">ledesmablt.com</a>
+  </div>
+</body>
+</html>
